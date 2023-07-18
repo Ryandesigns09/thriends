@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Post Likes</title>
+</head>
+<body>
+    <h1>Post Likes</h1>
+    <h2>Likes for post with URL: {{ post_url }}</h2>
+    {% if usernames %}
+        <ul>
+            {% for username in usernames %}
+                <li>{{ username }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No likes found for the post.</p>
+    {% endif %}
+    <a href="/">Go back</a>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>mytheinds - find your threads friends!</title>
+    <!-- Add Bootstrap CSS link -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,700;0,800;0,900;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <style>
+        /* Add dark mode styles */
+        body {
+            background-color: #121212;
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .small-image {
+            max-height: 26px;
+        }
+        .small-text {
+            font-size:12px;
+        }
+
+        p {
+            font-size: 14px;
+        }
+
+        h1 {
+            font-family: 'Poppins', sans-serif;
+        }
+        .download-btn {
+            text-transform: uppercase;
+            font-size:14px;
+            font-weight:bold;
+        }
+
+        /* Add the enlarge effect */
+        .enlarge-effect {
+            transition: transform 0.3s ease;
+        }
+
+        .enlarge-effect:hover {
+            transform: scale(1.2);
+        }
+
+        .card {
+            max-width:300px;
+            margin:auto;
+            text-align:center;
+        }
+
+.result-img {
+    max-width: 600px;
+    border-radius: 9px;
+    border: 1px solid #1d1d1d;
+    box-shadow: 0px 0px 30px #1b1b1b;
+}
+        .container {
+            max-width: 600px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #bcbcbc;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+     /* Dark mode header styles */
+        .header {
+            background-color: #1d1d1d;
+            color: #fff;
+            padding: 10px;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 999;
+        }
+
+        .header h1 {
+            margin: 0;
+            padding: 0;
+            font-size: 24px;
+        }
+
+        .dark-mode-toggle {
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+        <div class="header">
+        <h1><a target="_blank" href="https://threads.net/@mythriends"><img class="small-image enlarge-effect float-right" src="{{ url_for('static', filename='images/threadsicon.png') }}"></a> <a href="/">mythriends</a>
+        </h1>
+    </div>
+
+    <div class="container">
+    <h1 class="mt-4">{{ username }} <a target="_blank" href="https://threads.net/@{{username}}"><img class="small-image enlarge-effect" src="{{ url_for('static', filename='images/threadsicon.png') }}"></a></h1>
+        <h4>{{ user_profile.full_name }}</h4>
+        {% if user_profile and user_profile.biography %}
+            <p>{{ user_profile.biography }}</p>
+        {% endif %}
+ 
+        {% if user_profile and user_profile.follower_count %}
+
+            <p>{{ user_profile.follower_count|format }} followers   |   <a href="{{ user_profile.bio_links[0].url }}">{{ user_profile.bio_links[0].url }}</a></p>
+
+        {% endif %}
+        
+        {% if image_path %}
+            <div class="text-center pt-2 pb-3">
+                <img src="{{ image_path }}" alt="Result Image" class="img-fluid result-img">
+            </div>
+                    <div class="text-center">
+            <!-- Add the buttons in a Bootstrap row and use column classes -->
+            <div class="row pb-3">
+                <div class="col">
+                    <h5>Share your top thriends image on threads!<h5>
+                    <p class="small-text">Long press on the image and click on Save to Photos</p>
+                    <a href="{{ image_path }}" download class="btn btn-outline-light download-btn">Download to files</a>
+                </div>
+              
+            </div>
+        </div>
+
+
+        {% endif %}
+       {% if friends_list %}
+       <div class="card text-white bg-dark mb-3 mt-3">
+            <h5 class="text-center pt-3">Top 10 Engaged Friends:</h5>
+            <ol class="list-unstyled text-center"> <!-- Apply the list-unstyled and text-center classes -->
+                {% for friend in friends_list %}
+                    <li>
+                        <a href="https://www.threads.net/{{ friend[0] }}"> <!-- Construct the URL using friend's username -->
+                            {{ friend[0] }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ol>
+        {% endif %}
+    </div>
+</div>
+
+    <!-- Add Bootstrap JS and Popper.js scripts (required by Bootstrap) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

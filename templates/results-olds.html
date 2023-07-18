@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Threads API Result</title>
+</head>
+<body>
+    <h1>Threads API Result</h1>
+    {% if username and user_id %}
+        <p>The user ID for username '{{ username }}' is: {{ user_id }}</p>
+        {% if threads %}
+            <h2>The threads for user '{{ username }}' are:</h2>
+            <ul>
+                {% for thread in threads %}
+                    <li>{{ username }}'s Post: {{ thread['thread_items'][0]['post']['caption'] }} || Likes: {{ thread['thread_items'][0]['post']['like_count'] }}</li>
+                    <ul>
+                        {% for like_info in thread['likes'] %}
+                            <li>{{ like_info }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endfor %}
+            </ul>
+            {% if friends_list %}
+                <h2>Top 10 Engaged Friends:</h2>
+                <ol>
+                    {% for friend in friends_list %}
+                        <li>{{ friend[0] }}</li>
+                    {% endfor %}
+                </ol>
+                {% if image_path %}
+                    <h2>Result Image:</h2>
+                    <img src="{{ image_path }}" alt="Result Image">
+                {% endif %}
+            {% endif %}
+        {% else %}
+            <p>No threads found for user '{{ username }}'.</p>
+        {% endif %}
+    {% else %}
+        <p>User ID not found for username '{{ username }}'.</p>
+    {% endif %}
+    <a href="/">Go back</a>
+</body>
+</html>
